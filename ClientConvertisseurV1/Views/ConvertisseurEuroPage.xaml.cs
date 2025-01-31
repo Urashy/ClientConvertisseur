@@ -1,4 +1,7 @@
+using ClientConvertisseurV1.Models;
+using ClientConvertisseurV1.Services;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -7,6 +10,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -23,9 +27,40 @@ namespace ClientConvertisseurV1.Views
     /// </summary>
     public sealed partial class ConvertisseurEuroPage : Page
     {
+        ObservableCollection<Devise> Devises = new ObservableCollection<Devise>();
         public ConvertisseurEuroPage()
         {
             this.InitializeComponent();
+
+            this.DataContext = this;
+            GetDataOnLoadAsync();
+        }
+
+        private async void GetDataOnLoadAsync()
+        {
+            WSService service = new WSService("http://localhost:5189/api");
+            List<Devise> result = await service.GetDevisesAsync("Devises");
+            if(result == null)
+            {
+                MessageAsync("Erreur","API non disponible","ok");
+            }
+            else
+            {
+                Devises = new ObservableCollection<Devise>(result);   
+            }
+        }
+
+        private async void MessageAsync(string m1,string m2,string m3)
+        {
+            ContentDialog noWifiDialog = new ContentDialog()
+            {
+                Title = m1,
+                Content = m2,
+                CloseButtonText = m3
+            };
+            noWifiDialog.XamlRoot = this.Content.XamlRoot;
+            ContentDialogResult result = await noWifiDialog.ShowAsync();
+            Console.WriteLine(result);
         }
     }
 }

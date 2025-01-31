@@ -1,15 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Page
     x:Class="ClientConvertisseurV1.Views.ConvertisseurEuroPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ClientConvertisseurV1.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:ClientConvertisseurV1.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
 
-    <Grid>
+    <RelativePanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <!--  Titre  -->
+        <TextBlock
+            x:Name="TitreTextBlock"
+            Margin="0,0,0,20"
+            FontSize="24"
+            FontWeight="Bold"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            Text="Convertisseur Euro" />
 
-    </Grid>
+        <!--  Montant  -->
+        <TextBlock
+            x:Name="MontantLabel"
+            Margin="0,0,0,5"
+            RelativePanel.Below="TitreTextBlock"
+            Text="Montant en Euro :" />
+
+        <TextBox
+            x:Name="MontantTextBox"
+            Width="200"
+            Margin="0,0,0,10"
+            RelativePanel.Below="MontantLabel" />
+
+        <!--  Devise  -->
+        <TextBlock
+            x:Name="DeviseLabel"
+            Margin="0,0,0,5"
+            RelativePanel.Below="MontantTextBox"
+            Text="Devise :" />
+
+        <ComboBox
+            x:Name="DeviseComboBox"
+            Width="200"
+            Margin="0,0,0,10"
+            RelativePanel.Below="DeviseLabel" />
+
+        <!--  Résultat  -->
+        <TextBox
+            x:Name="ResultatTextBox"
+            Width="200"
+            Margin="0,0,0,20"
+            Background="LightGray"
+            IsReadOnly="True"
+            RelativePanel.Below="DeviseComboBox" />
+
+        <!--  Bouton  -->
+        <Button
+            x:Name="ConvertirButton"
+            Padding="20,5"
+            Content="Convertir"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.Below="ResultatTextBox" />
+    </RelativePanel>
 </Page>

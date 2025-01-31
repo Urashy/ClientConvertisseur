@@ -11,14 +11,14 @@ using System.Net.Http.Json;
 
 namespace ClientConvertisseurV1.Services
 {
-    public class WSService
+    public class WSService : IService
     {
         private System.Net.Http.HttpClient httpClient;
 
-        public WSService()
+        public WSService(string url)
         {
             httpClient = new System.Net.Http.HttpClient();
-            httpClient.BaseAddress = new Uri("https://localhost:5189/api/");
+            httpClient.BaseAddress = new Uri(url);
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json") // Fix le typo "application./json"
