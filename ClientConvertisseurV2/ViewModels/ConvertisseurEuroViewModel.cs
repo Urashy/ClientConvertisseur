@@ -49,7 +49,16 @@ namespace ClientConvertisseurV2.ViewModels
             }
         }
 
-
+        private double montant;
+        public double Montant
+        {
+            get { return montant; }
+            set
+            {
+                montant = value;
+                OnPropertyChanged(nameof(Montant));  // Notify UI that Devises has changed
+            }
+        }
 
 
 
@@ -68,7 +77,7 @@ namespace ClientConvertisseurV2.ViewModels
             else
             {
                 devise = (Devise)DeviseComboBox.SelectedItem;
-                Resultat = Convert.ToDouble(MontantTextBox.Text) * devise.Taux;
+                Resultat = Convert.ToDouble(Montant) * devise.Taux;
             }
         }
 
