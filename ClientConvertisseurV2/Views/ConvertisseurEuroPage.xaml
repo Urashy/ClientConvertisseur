@@ -48,7 +48,7 @@
             DisplayMemberPath="NomDevise"
             ItemsSource="{Binding Devises}"
             RelativePanel.Below="DeviseLabel"
-            SelectedItem="{Binding DeviseSelectionee, Mode=TwoWay}" />
+            SelectedItem="{Binding DeviseSelectionnee, Mode=TwoWay}" />
 
         <!--  Résultat  -->
         <TextBox
@@ -58,7 +58,7 @@
             Background="LightGray"
             IsReadOnly="True"
             RelativePanel.Below="DeviseComboBox"
-            Text="{Binding Montant}" />
+            Text="{Binding Resultat}" />
 
         <!--  Bouton  -->
         <Button

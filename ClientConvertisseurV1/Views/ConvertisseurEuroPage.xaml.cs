@@ -97,7 +97,7 @@ namespace ClientConvertisseurV1.Views
         private void ConvertirButton_Click(object sender, RoutedEventArgs e)
         {
             Devise devise;
-            if (DeviseComboBox.SelectedItem== null)
+            if (DeviseComboBox.SelectedItem == null)
             {
                 MessageAsync("Erreur", "Il faut renseigner une devise");
             }

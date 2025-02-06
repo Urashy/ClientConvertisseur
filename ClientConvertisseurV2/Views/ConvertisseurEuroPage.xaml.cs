@@ -13,6 +13,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Microsoft.Extensions.DependencyInjection;
+
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,8 +29,7 @@ namespace ClientConvertisseurV2.Views
         public ConvertisseurEuroPage()
         {
             this.InitializeComponent();
-            ConvertisseurEuroViewModel cv = new ConvertisseurEuroViewModel();
-            DataContext = cv;
+            DataContext = App.Current.Services.GetService<ConvertisseurEuroViewModel>();
         }
     }
 }

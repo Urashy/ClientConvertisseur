@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using ClientConvertisseurV2.Services;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 
 namespace ClientConvertisseurV2.ViewModels
 {
@@ -60,33 +61,67 @@ namespace ClientConvertisseurV2.ViewModels
             }
         }
 
-
+        private Devise deviseSelectionnee;
+        public Devise DeviseSelectionnee
+        {
+            get { return deviseSelectionnee; }
+            set
+            {
+                deviseSelectionnee = value;
+                OnPropertyChanged(nameof(DeviseSelectionnee));  // Notify UI that Devises has changed
+            }
+        }
 
 
         private void ActionSetConversion()
         {
             Devise devise;
-            if (DeviseComboBox.SelectedItem == null)
+            if (DeviseSelectionnee == null)
             {
-                //MessageAsync("Erreur", "Il faut renseigner une devise");
+                MessageAsync("Erreur", "Il faut renseigner une devise");
             }
-            else if (Resultat == null )
+            else if (Montant == 0) 
             {
-                //MessageAsync("Erreur", "Il faut renseigner un montant");
+                MessageAsync("Erreur", "Il faut renseigner un montant");
             }
             else
             {
-                devise = (Devise)DeviseComboBox.SelectedItem;
-                Resultat = Convert.ToDouble(Montant) * devise.Taux;
+                devise = DeviseSelectionnee;
+                Resultat = Montant * devise.Taux;
+                Console.WriteLine(Resultat);
             }
         }
 
+        private async void MessageAsync(string m1, string m2)
+        {
+            try
+            {
+                ContentDialog dialog = new ContentDialog()
+                {
+                    Title = m1,
+                    Content = m2,
+                    CloseButtonText = "ok",
+                    XamlRoot = App.MainRoot.XamlRoot  // Utilisation de App.MainRoot
+                };
+
+                await dialog.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, on affiche dans la console pour le débogage
+                Console.WriteLine($"Erreur lors de l'affichage du dialogue : {ex.Message}");
+            }
+        }
+
+
         private async void GetDataOnLoadAsync()
         {
-            WSService service = new WSService("http://localhost:5199/api/");
+            WSService service = new WSService("http://localhost:5189/api/");
             List<Devise> result = await service.GetDevisesAsync("devises");
+            Console.WriteLine(resultat);
             if (result == null)
             {
+                MessageAsync("Erreur", "API non disponible");
             }
             else
             {
